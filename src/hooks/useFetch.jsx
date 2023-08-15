@@ -17,7 +17,7 @@ export const useFetch = (url) => {
         const data = await resp.json();
 
         setState({
-            data: data, 
+            data: data,
             isLoading: false,
             hasError: null,
         });
@@ -25,7 +25,7 @@ export const useFetch = (url) => {
 
     useEffect(() => {
         getFetch();
-    }, [url]); // si el url es el mismo no se renderiza nuevamente
+    }, [url]);
 
     return {
         data: state.data,
