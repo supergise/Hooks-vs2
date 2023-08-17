@@ -1,7 +1,7 @@
+import React from 'react';
+// import {memo} from 'react';
 
-import {memo} from 'react';
-
-export const Small = memo(({value}) => {
+export const Small = React.memo(({value}) => {
 
     console.log('me volví a dibujar');
 
