@@ -10,6 +10,7 @@ const heavyStuff = (iterationNumber = 100) => {
 };
 
 export const MemoHook = () => {
+    
     const { counter, increment } = useCounter(4000);
     const [show, setShow] = useState(true);
 
