@@ -1,50 +1,24 @@
-import { useEffect, useReducer } from "react";
-import { todoReducer, TodoList, TodoAdd } from "./";
-
-const initialState = [
-    // {
-    //     id: new Date().getTime(),
-    //     description: "Recolectar la piedra del alma",
-    //     done: false,
-    // },
-];
-
-const init = () => {
-    return JSON.parse(localStorage.getItem("todos")) || [];
-};
+import { useTodos } from "../hooks";
+import { TodoList, TodoAdd } from "./";
 
 export const TodoApp = () => {
-    const [todos, dispatch] = useReducer(todoReducer, initialState, init); // todos es el state y el dispatch despacha el todo
 
-    useEffect(() => {
-        localStorage.setItem("todos", JSON.stringify(todos) || []);
-    }, [todos]);
-
-    const handleNewTodo = (todo) => {
-        const action = {
-            type: "[TODO] Add Todo",
-            payload: todo,
-        };
-        dispatch(action);
-    };
-
-    const handleDeleteTodo = (id) => {
-        dispatch({
-            type: "[TODO] Remove Todo",
-            payload: id,
-        });
-    };
+    const {todos, todosCount, pendingTodosCount, handleNewTodo, handleDeleteTodo, handleToggleTodo} = useTodos();
 
     return (
         <>
             <h1>
-                TodoApp 10 <small>pendientes: 2</small>
+                TodoApp {todosCount} <small>pendientes: {pendingTodosCount}</small> {/* TodoApp {todos.length} <small>pendientes: {todos.filter(todo => !todo.done).length}</small> */}
             </h1>
             <hr />
 
             <div className="row">
                 <div className="col-7">
-                    <TodoList todos={todos} onDeleteTodo={handleDeleteTodo} />
+                    <TodoList 
+                        todos={todos} 
+                        onDeleteTodo={handleDeleteTodo}
+                        onToggleTodo={handleToggleTodo}
+                    />
                 </div>
 
                 <div className="col-5">
@@ -52,6 +26,7 @@ export const TodoApp = () => {
                     <hr />
 
                     <TodoAdd onNewTodo={handleNewTodo} />
+
                 </div>
             </div>
         </>
